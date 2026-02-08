@@ -1,0 +1,2059 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estiak Insights | Modern Blog</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --accent-color: #4cc9f0;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --gray-color: #6c757d;
+            --light-gray: #e9ecef;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --border-radius: 8px;
+        }
+
+        body {
+            background-color: #f9f9f9;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .logo span {
+            color: var(--secondary-color);
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent-color);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 600;
+            font-size: 16px;
+            transition: color 0.3s;
+            position: relative;
+            cursor: pointer;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        nav ul li a.active {
+            color: var(--primary-color);
+        }
+
+        nav ul li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+
+        .search-container {
+            max-width: 600px;
+            margin: 30px auto 0;
+            position: relative;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 15px 20px;
+            border-radius: 50px;
+            border: none;
+            font-size: 16px;
+            box-shadow: var(--shadow);
+        }
+
+        .search-container button {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .search-container button:hover {
+            background-color: #3ab0d6;
+        }
+
+        /* Main Content */
+        main {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .blog-posts {
+            flex: 3;
+            min-width: 300px;
+        }
+
+        .sidebar {
+            flex: 1;
+            min-width: 280px;
+        }
+
+        .section-title {
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: var(--dark-color);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background-color: var(--accent-color);
+            border-radius: 2px;
+        }
+
+        .filter-info {
+            background-color: var(--light-color);
+            border-radius: var(--border-radius);
+            padding: 15px 20px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+        }
+
+        .filter-info p {
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .clear-filter {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .clear-filter:hover {
+            background-color: var(--secondary-color);
+        }
+
+        /* Blog Post Cards */
+        .post-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .post-image {
+            height: 220px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .post-content {
+            padding: 25px;
+        }
+
+        .post-category {
+            display: inline-block;
+            background-color: var(--light-gray);
+            color: var(--primary-color);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .post-category:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .post-title {
+            font-size: 22px;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .post-title a {
+            text-decoration: none;
+            color: var(--dark-color);
+            transition: color 0.3s;
+        }
+
+        .post-title a:hover {
+            color: var(--primary-color);
+        }
+
+        .post-meta {
+            display: flex;
+            color: var(--gray-color);
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .post-meta span {
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .post-meta i {
+            margin-right: 5px;
+        }
+
+        .post-excerpt {
+            color: var(--gray-color);
+            margin-bottom: 20px;
+        }
+
+        .read-more {
+            display: inline-block;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .read-more:hover {
+            color: var(--secondary-color);
+        }
+
+        .post-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .post-tag {
+            background-color: var(--light-gray);
+            color: var(--dark-color);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .post-tag:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Sidebar Styles */
+        .sidebar-widget {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .widget-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--dark-color);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .widget-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+
+        .categories-list {
+            list-style: none;
+        }
+
+        .categories-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .categories-list li:last-child {
+            border-bottom: none;
+        }
+
+        .categories-list a {
+            text-decoration: none;
+            color: var(--dark-color);
+            display: flex;
+            justify-content: space-between;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .categories-list a:hover {
+            color: var(--primary-color);
+        }
+
+        .categories-list span {
+            background-color: var(--light-gray);
+            color: var(--gray-color);
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 14px;
+        }
+
+        .recent-posts li {
+            display: flex;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--light-gray);
+            cursor: pointer;
+        }
+
+        .recent-posts li:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .recent-post-img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: var(--border-radius);
+            margin-right: 15px;
+        }
+
+        .recent-post-content h4 {
+            font-size: 16px;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .recent-post-content a {
+            text-decoration: none;
+            color: var(--dark-color);
+            transition: color 0.3s;
+        }
+
+        .recent-post-content a:hover {
+            color: var(--primary-color);
+        }
+
+        .recent-post-content span {
+            font-size: 14px;
+            color: var(--gray-color);
+        }
+
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag {
+            background-color: var(--light-gray);
+            color: var(--dark-color);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .tag:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .tag.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Newsletter */
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .newsletter-form input {
+            padding: 12px 15px;
+            border-radius: var(--border-radius);
+            border: 1px solid #ddd;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .newsletter-form button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 15px;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .newsletter-form button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 40px;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 25px;
+            color: white;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #b0b7c3;
+            text-decoration: none;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #2d3748;
+            color: white;
+            border-radius: 50%;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .social-icons a:hover {
+            background-color: var(--primary-color);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #2d3748;
+            color: #b0b7c3;
+            font-size: 14px;
+        }
+
+        /* Load More Button */
+        .load-more-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .load-more-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: var(--shadow);
+        }
+
+        .load-more-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            width: 90%;
+            max-width: 700px;
+            max-height: 90vh;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+            animation: modalFadeIn 0.3s;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-header {
+            padding: 20px 30px;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 30px;
+            max-height: calc(90vh - 80px);
+            overflow-y: auto;
+        }
+
+        .modal-body img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: var(--border-radius);
+            margin-bottom: 25px;
+        }
+
+        .modal-body .post-meta {
+            margin-bottom: 25px;
+        }
+
+        .modal-body h3 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: var(--dark-color);
+        }
+
+        .modal-body p {
+            margin-bottom: 20px;
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        /* No Results Message */
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .no-results i {
+            font-size: 60px;
+            color: var(--light-gray);
+            margin-bottom: 20px;
+        }
+
+        .no-results h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+
+        .no-results p {
+            color: var(--gray-color);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            main {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-wrap: wrap;
+            }
+            
+            nav {
+                display: none;
+                width: 100%;
+                margin-top: 20px;
+            }
+            
+            nav.active {
+                display: block;
+            }
+            
+            nav ul {
+                flex-direction: column;
+            }
+            
+            nav ul li {
+                margin: 10px 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .footer-column {
+                flex: 100%;
+            }
+
+            .modal-content {
+                width: 95%;
+            }
+
+            .modal-body {
+                padding: 20px;
+            }
+
+            .modal-body h3 {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 60px 0;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .post-card {
+                margin-bottom: 30px;
+            }
+            
+            .post-content {
+                padding: 20px;
+            }
+            
+            .post-meta {
+                flex-direction: column;
+            }
+            
+            .post-meta span {
+                margin-bottom: 5px;
+            }
+
+            .filter-info {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo" id="homeLink">
+                <i class="fas fa-blog"></i>
+                Estiak<span>Insights</span>
+            </div>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="#" class="active" data-filter="all">All Posts</a></li>
+                    <li><a href="#" data-filter="Web Development">Web Dev</a></li>
+                    <li><a href="#" data-filter="AI & Machine Learning">AI & ML</a></li>
+                    <li><a href="#" data-filter="Cybersecurity">Security</a></li>
+                    <li><a href="#" data-filter="About">About</a></li>
+                    <li><a href="#" data-filter="Contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Discover the Latest in Technology</h1>
+            <p>Explore insightful articles on web development, AI, cybersecurity, and the latest tech trends from industry experts.</p>
+            
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search for articles...">
+                <button id="searchBtn"><i class="fas fa-search"></i> Search</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <main>
+            <!-- Blog Posts Section -->
+            <section class="blog-posts">
+                <h2 class="section-title" id="sectionTitle">Latest Articles</h2>
+                
+                <!-- Filter Information -->
+                <div class="filter-info" id="filterInfo" style="display: none;">
+                    <p id="filterText">Showing results for: <span id="filterValue"></span></p>
+                    <button class="clear-filter" id="clearFilterBtn">Clear Filter</button>
+                </div>
+                
+                <div id="postsContainer">
+                    <!-- Blog posts will be dynamically loaded here -->
+                </div>
+                
+                <div class="load-more-container">
+                    <button class="load-more-btn" id="loadMoreBtn">Load More Articles</button>
+                </div>
+            </section>
+            
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <!-- Categories Widget -->
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">Categories</h3>
+                    <ul class="categories-list" id="categoriesList">
+                        <!-- Categories will be loaded here -->
+                    </ul>
+                </div>
+                
+                <!-- Recent Posts Widget -->
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">Recent Posts</h3>
+                    <ul class="recent-posts" id="recentPosts">
+                        <!-- Recent posts will be loaded here -->
+                    </ul>
+                </div>
+                
+                <!-- Tags Widget -->
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">Popular Tags</h3>
+                    <div class="tags-container" id="tagsContainer">
+                        <!-- Tags will be loaded here -->
+                    </div>
+                </div>
+                
+                <!-- Newsletter Widget -->
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">Newsletter</h3>
+                    <p>Subscribe to get the latest tech news and updates.</p>
+                    <form class="newsletter-form" id="newsletterForm">
+                        <input type="email" placeholder="Your email address" required>
+                        <button type="submit">Subscribe</button>
+                    </form>
+                </div>
+            </aside>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>EstiakInsights</h3>
+                    <p>Your go-to source for the latest technology news, tutorials, and insights. Stay updated with the rapidly evolving tech world.</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" class="footer-link" data-filter="all">Home</a></li>
+                        <li><a href="#" class="footer-link" data-filter="About">About Us</a></li>
+                        <li><a href="#" class="footer-link" id="privacyLink">Privacy Policy</a></li>
+                        <li><a href="#" class="footer-link" id="termsLink">Terms of Service</a></li>
+                        <li><a href="#" class="footer-link" data-filter="Contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Categories</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" class="footer-link" data-filter="Web Development">Web Development</a></li>
+                        <li><a href="#" class="footer-link" data-filter="AI & Machine Learning">AI & Machine Learning</a></li>
+                        <li><a href="#" class="footer-link" data-filter="Cybersecurity">Cybersecurity</a></li>
+                        <li><a href="#" class="footer-link" data-filter="Cloud Computing">Cloud Computing</a></li>
+                        <li><a href="#" class="footer-link" data-filter="Mobile Development">Mobile Development</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Tech Street,Joypurhat,Rajshahi</li>
+                        <li><i class="fas fa-envelope"></i> info@estiakinsights.com</li>
+                        <li><i class="fas fa-phone"></i> +8801712345678</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2026 EstiakInsights. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Post Detail Modal -->
+    <div class="modal" id="postModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Post Details</h2>
+                <button class="modal-close" id="modalCloseBtn">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Post content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- About/Contact Modal -->
+    <div class="modal" id="infoModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="infoModalTitle">Info</h2>
+                <button class="modal-close" id="infoModalCloseBtn">&times;</button>
+            </div>
+            <div class="modal-body" id="infoModalBody">
+                <!-- Info content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Blog posts data with full content
+        const blogPosts = [
+            {
+                id: 1,
+                title: "The Future of Web Development: Trends to Watch in 2023",
+                category: "Web Development",
+                date: "June 15, 2023",
+                readTime: "5 min read",
+                excerpt: "Explore the latest trends in web development including serverless architecture, Jamstack, and WebAssembly that are shaping the future of the web.",
+                image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                tags: ["Web Development", "JavaScript", "React", "CSS"],
+                content: `
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Web Development">
+                    <div class="post-meta">
+                        <span><i class="far fa-calendar"></i> June 15, 2023</span>
+                        <span><i class="far fa-clock"></i> 5 min read</span>
+                        <span><i class="far fa-folder"></i> Web Development</span>
+                    </div>
+                    <h3>The Future of Web Development: Trends to Watch in 2023</h3>
+                    <p>The web development landscape is constantly evolving, with new technologies and methodologies emerging at a rapid pace. In 2023, we're seeing several key trends that are shaping the future of how we build for the web.</p>
+                    <p><strong>1. Serverless Architecture:</strong> Serverless computing continues to gain traction, allowing developers to build and run applications without managing servers. This approach reduces operational complexity and costs while improving scalability.</p>
+                    <p><strong>2. Jamstack Revolution:</strong> Jamstack (JavaScript, APIs, and Markup) has moved from niche to mainstream. By decoupling the frontend from the backend, Jamstack offers improved performance, security, and developer experience.</p>
+                    <p><strong>3. WebAssembly (Wasm):</strong> WebAssembly is enabling near-native performance in web browsers, opening up new possibilities for web applications. We're seeing more tools and languages targeting Wasm compilation.</p>
+                    <p><strong>4. AI-Powered Development:</strong> AI tools like GitHub Copilot are changing how developers write code, offering intelligent suggestions and automating repetitive tasks.</p>
+                    <p>These trends represent just a fraction of what's happening in web development today. Staying current with these advancements is crucial for any developer looking to build modern, efficient web applications.</p>
+                `
+            },
+            {
+                id: 2,
+                title: "Understanding AI Ethics: Challenges and Solutions",
+                category: "AI & Machine Learning",
+                date: "June 10, 2023",
+                readTime: "7 min read",
+                excerpt: "As artificial intelligence becomes more integrated into our lives, ethical considerations are more important than ever. Learn about the key challenges and potential solutions.",
+                image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                tags: ["AI", "Ethics", "Machine Learning", "Technology"],
+                content: `
+                    <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="AI Ethics">
+                    <div class="post-meta">
+                        <span><i class="far fa-calendar"></i> June 10, 2023</span>
+                        <span><i class="far fa-clock"></i> 7 min read</span>
+                        <span><i class="far fa-folder"></i> AI & Machine Learning</span>
+                    </div>
+                    <h3>Understanding AI Ethics: Challenges and Solutions</h3>
+                    <p>As artificial intelligence systems become increasingly sophisticated and integrated into our daily lives, the ethical implications of AI development and deployment have moved to the forefront of technological discourse.</p>
+                    <p><strong>Key Ethical Challenges:</strong></p>
+                    <p><strong>1. Bias and Fairness:</strong> AI systems can perpetuate and even amplify existing societal biases if trained on biased data. This can lead to discriminatory outcomes in areas like hiring, lending, and law enforcement.</p>
+                    <p><strong>2. Transparency and Explainability:</strong> Many advanced AI models, particularly deep learning systems, operate as "black boxes" where it's difficult to understand how decisions are made. This lack of transparency raises concerns about accountability.</p>
+                    <p><strong>3. Privacy Concerns:</strong> AI systems often require large amounts of data, raising significant privacy issues regarding how this data is collected, stored, and used.</p>
+                    <p><strong>4. Autonomous Decision-Making:</strong> As AI systems gain more autonomy, questions arise about who is responsible when things go wrong, particularly in critical areas like healthcare and transportation.</p>
+                    <p><strong>Potential Solutions:</strong></p>
+                    <p>Addressing these challenges requires a multi-faceted approach including diverse and representative training data, explainable AI techniques, robust privacy-preserving technologies, and clear regulatory frameworks. Ethical AI development isn't just a technical challenge—it requires collaboration between technologists, ethicists, policymakers, and the public.</p>
+                `
+            },
+            {
+                id: 3,
+                title: "Cybersecurity Best Practices for Remote Teams",
+                category: "Cybersecurity",
+                date: "June 5, 2023",
+                readTime: "6 min read",
+                excerpt: "With the rise of remote work, cybersecurity has become a critical concern. Discover essential practices to keep your remote team secure.",
+                image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                tags: ["Cybersecurity", "Remote Work", "Security", "VPN"],
+                content: `
+                    <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Cybersecurity">
+                    <div class="post-meta">
+                        <span><i class="far fa-calendar"></i> June 5, 2023</span>
+                        <span><i class="far fa-clock"></i> 6 min read</span>
+                        <span><i class="far fa-folder"></i> Cybersecurity</span>
+                    </div>
+                    <h3>Cybersecurity Best Practices for Remote Teams</h3>
+                    <p>The shift to remote work has expanded the attack surface for many organizations, making cybersecurity more challenging than ever. Here are essential practices to secure your remote workforce.</p>
+                    <p><strong>1. Implement Multi-Factor Authentication (MFA):</strong> Require MFA for all corporate accounts. This adds an additional layer of security beyond passwords, significantly reducing the risk of account compromise.</p>
+                    <p><strong>2. Use a VPN for Secure Access:</strong> Ensure all remote employees connect through a corporate VPN when accessing internal resources. This encrypts data in transit and provides secure access to company networks.</p>
+                    <p><strong>3. Keep Software Updated:</strong> Regularly update all software, including operating systems, applications, and security tools. Enable automatic updates where possible to ensure timely patching of vulnerabilities.</p>
+                    <p><strong>4. Provide Security Awareness Training:</strong> Regular training helps employees recognize phishing attempts, social engineering attacks, and other common threats. Simulated phishing exercises can reinforce this training.</p>
+                    <p><strong>5. Secure Home Networks:</strong> Encourage employees to secure their home Wi-Fi networks with strong passwords, enable network encryption (WPA3 if available), and keep router firmware updated.</p>
+                    <p>By implementing these practices and fostering a culture of security awareness, organizations can significantly reduce their risk profile while enabling productive remote work.</p>
+                `
+            },
+            {
+                id: 4,
+                title: "Getting Started with React 18: New Features Explained",
+                category: "Web Development",
+                date: "May 28, 2023",
+                readTime: "8 min read",
+                excerpt: "React 18 brings exciting new features like concurrent rendering, automatic batching, and new hooks. Learn how to leverage these in your projects.",
+                image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                tags: ["React", "JavaScript", "Frontend", "Web Development"],
+                content: `
+                    <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="React 18">
+                    <div class="post-meta">
+                        <span><i class="far fa-calendar"></i> May 28, 2023</span>
+                        <span><i class="far fa-clock"></i> 8 min read</span>
+                        <span><i class="far fa-folder"></i> Web Development</span>
+                    </div>
+                    <h3>Getting Started with React 18: New Features Explained</h3>
+                    <p>React 18 represents a significant milestone for the popular JavaScript library, introducing powerful new features that improve both developer experience and application performance.</p>
+                    <p><strong>1. Concurrent Rendering:</strong> This is the headline feature of React 18. Concurrent React allows components to render without blocking the main thread, enabling smoother user experiences even during heavy rendering operations.</p>
+                    <p><strong>2. Automatic Batching:</strong> React 18 improves performance by automatically batching state updates, even for updates that happen outside of React event handlers (like promises, timeouts, and native event handlers).</p>
+                    <p><strong>3. New Hooks:</strong> React 18 introduces several new hooks including useId for generating unique IDs, useTransition for marking non-urgent state updates, and useDeferredValue for deferring re-rendering of non-urgent parts of the UI.</p>
+                    <p><strong>4. Suspense for Data Fetching:</strong> While Suspense existed previously, React 18 expands its capabilities, making it easier to coordinate loading states across your application when fetching data.</p>
+                    <p><strong>5. New Root API:</strong> React 18 introduces a new root API using ReactDOM.createRoot() instead of ReactDOM.render(). This enables all the new concurrent features.</p>
+                    <p>To start using React 18, update your project with npm install react@18 react-dom@18, then switch to the new root API. Most existing code will work without changes, but you'll need to update tests that use ReactDOM.render().</p>
+                `
+            },
+            {
+                id: 5,
+                title: "The Impact of Quantum Computing on Cybersecurity",
+                category: "Cybersecurity",
+                date: "May 20, 2023",
+                readTime: "9 min read",
+                excerpt: "Quantum computing promises to revolutionize many fields, but it also poses significant threats to current encryption methods. Explore what this means for cybersecurity.",
+                image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                tags: ["Quantum Computing", "Cybersecurity", "Encryption", "Technology"],
+                content: `
+                    <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Quantum Computing">
+                    <div class="post-meta">
+                        <span><i class="far fa-calendar"></i> May 20, 2023</span>
+                        <span><i class="far fa-clock"></i> 9 min read</span>
+                        <span><i class="far fa-folder"></i> Cybersecurity</span>
+                    </div>
+                    <h3>The Impact of Quantum Computing on Cybersecurity</h3>
+                    <p>Quantum computing represents one of the most significant technological shifts on the horizon, with profound implications for cybersecurity. While still in its early stages, the potential of quantum computers to break current encryption standards necessitates proactive preparation.</p>
+                    <p><strong>The Quantum Threat:</strong></p>
+                    <p>Most of today's public-key cryptography relies on mathematical problems that are difficult for classical computers to solve. However, quantum computers running Shor's algorithm could theoretically break RSA, ECC, and other widely-used encryption methods in a matter of hours or days.</p>
+                    <p><strong>Post-Quantum Cryptography:</strong></p>
+                    <p>In response to this threat, researchers are developing post-quantum cryptographic algorithms that would be resistant to attacks from both classical and quantum computers. The National Institute of Standards and Technology (NIST) is leading standardization efforts in this area.</p>
+                    <p><strong>Quantum Key Distribution (QKD):</strong></p>
+                    <p>QKD uses quantum mechanics to enable two parties to produce a shared random secret key known only to them, which can then be used to encrypt and decrypt messages. The security of QKD relies on fundamental laws of physics rather than computational complexity.</p>
+                    <p><strong>Preparing for the Quantum Future:</strong></p>
+                    <p>Organizations should start preparing now by conducting crypto-inventories to understand where vulnerable encryption is deployed, developing migration plans for post-quantum cryptography, and staying informed about developments in quantum-resistant algorithms.</p>
+                    <p>While large-scale quantum computers capable of breaking current encryption may still be years away, the sensitive data being encrypted today could be intercepted and stored for future decryption—a strategy known as "harvest now, decrypt later."</p>
+                     <p><strong> The importance of Quantum Computing in Cybersecurity Field:</strong></p>
+                     <p>Quantum comoptuing is very imporntant in cybersecurity field because it can break the current encryption methods that are widely used to protect the sensitive areas of cyber world. It is very important to identify each of the error and each of the matters</p>
+                     <p> It is the very much important to know the error it comes from, It is also important to know the solution of the error and how to slve the different types of errors</p>
+
+                    
+                    `
+            },
+            {
+                id: 6,
+                title: "Machine Learning in Healthcare: Current Applications",
+                category: "AI & Machine Learning",
+                date: "May 15, 2025",
+                readTime: "7 min read",
+                excerpt: "From diagnosis to drug discovery, machine learning is transforming healthcare. Discover the most promising applications in the medical field.",
+                image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                tags: ["Machine Learning", "Healthcare", "AI", "Medicine"],
+                content: `
+                    <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="ML in Healthcare">
+                    <div class="post-meta">
+                        <span><i class="far fa-calendar"></i> May 15, 2025</span>
+                        <span><i class="far fa-clock"></i> 7 min read</span>
+                        <span><i class="far fa-folder"></i> AI & Machine Learning</span>
+                    </div>
+                    <h3>Machine Learning in Healthcare: Current Applications</h3>
+                    <p>Machine learning is revolutionizing healthcare by enabling more accurate diagnoses, personalized treatments, and improved operational efficiency. Here are some of the most impactful applications currently in use or development.</p>
+                    <p><strong>1. Medical Imaging and Diagnosis:</strong> ML algorithms can analyze medical images (X-rays, MRIs, CT scans) with accuracy comparable to or exceeding human experts. They can detect anomalies like tumors, fractures, and neurological conditions earlier and more consistently than human radiologists.</p>
+                    <p><strong>2. Drug Discovery and Development:</strong> ML models can predict how different chemical compounds will interact with targets in the body, significantly accelerating drug discovery. This approach helped identify potential COVID-19 treatments and is being used to develop cancer therapies.</p>
+                    <p><strong>3. Predictive Analytics for Patient Outcomes:</strong> By analyzing electronic health records, ML can predict patient risks, disease progression, and treatment outcomes. This enables proactive interventions and personalized treatment plans.</p>
+                    <p><strong>4. Natural Language Processing for Clinical Notes:</strong> NLP algorithms can extract valuable information from unstructured clinical notes, helping to identify patterns, monitor patient progress, and ensure documentation completeness.</p>
+                    <p><strong>5. Remote Patient Monitoring:</strong> ML algorithms can analyze data from wearables and IoT devices to monitor patients remotely, detect early warning signs of deterioration, and reduce hospital readmissions.</p>
+                    <p>While ML offers tremendous potential in healthcare, it also presents challenges including data privacy concerns, algorithmic bias, and the need for robust validation. Successful implementation requires collaboration between data scientists, clinicians, and regulators to ensure these tools are both effective and ethical.</p>
+                `
+            },
+            {
+                id: 7,
+                title: "Building Scalable Cloud Infrastructure with AWS",
+                category: "Cloud Computing",
+                date: "May 10, 2023",
+                readTime: "6 min read",
+                excerpt: "Learn how to design and implement scalable cloud infrastructure using AWS services for high availability and performance.",
+                image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                tags: ["AWS", "Cloud", "Infrastructure", "DevOps"],
+                content: `
+                    <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Cloud Infrastructure">
+                    <div class="post-meta">
+                        <span><i class="far fa-calendar"></i> May 10, 2023</span>
+                        <span><i class="far fa-clock"></i> 6 min read</span>
+                        <span><i class="far fa-folder"></i> Cloud Computing</span>
+                    </div>
+                    <h3>Building Scalable Cloud Infrastructure with AWS</h3>
+                    <p>AWS provides a comprehensive set of services for building scalable, highly available cloud infrastructure. Here are key principles and services for designing robust AWS architectures.</p>
+                    <p><strong>1. Design for Failure:</strong> Assume everything will fail and design your architecture accordingly. Use multiple Availability Zones, implement auto-scaling groups, and design stateless applications where possible.</p>
+                    <p><strong>2. Leverage Managed Services:</strong> AWS offers managed services like RDS (databases), Elastic Beanstalk (application deployment), and Lambda (serverless computing) that reduce operational overhead and improve reliability.</p>
+                    <p><strong>3. Implement Auto-Scaling:</strong> Use AWS Auto Scaling to automatically adjust capacity based on demand. Combine this with Elastic Load Balancing to distribute traffic across multiple instances.</p>
+                    <p><strong>4. Use Content Delivery Networks:</strong> Implement Amazon CloudFront to cache content at edge locations worldwide, reducing latency and improving user experience for global audiences.</p>
+                    <p>By following these principles and leveraging AWS's extensive service portfolio, organizations can build cloud infrastructure that scales seamlessly with demand while maintaining high availability and performance.</p>
+                `
+            },
+            {
+                id: 8,
+                title: "Mobile App Development Trends in 2023",
+                category: "Mobile Development",
+                date: "May 5, 2023",
+                readTime: "5 min read",
+                excerpt: "Discover the latest trends in mobile app development, from cross-platform frameworks to AI integration and beyond.",
+                image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                tags: ["Mobile", "React Native", "Flutter", "Apps"],
+                content: `
+                    <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Mobile Development">
+                    <div class="post-meta">
+                        <span><i class="far fa-calendar"></i> May 5, 2023</span>
+                        <span><i class="far fa-clock"></i> 5 min read</span>
+                        <span><i class="far fa-folder"></i> Mobile Development</span>
+                    </div>
+                    <h3>Mobile App Development Trends in 2023</h3>
+                    <p>The mobile app development landscape continues to evolve rapidly. Here are the key trends shaping mobile development in 2023 and beyond.</p>
+                    <p><strong>1. Cross-Platform Development Maturity:</strong> Frameworks like React Native and Flutter have matured significantly, offering near-native performance while allowing code reuse across iOS and Android. This approach continues to gain popularity for its efficiency.</p>
+                    <p><strong>2. AI and ML Integration:</strong> Mobile apps are increasingly incorporating AI capabilities for features like image recognition, natural language processing, and personalized recommendations, often leveraging on-device ML for privacy and performance.</p>
+                    <p><strong>3. 5G Optimization:</strong> With 5G networks expanding, developers are creating apps that leverage high speeds and low latency for enhanced experiences like AR/VR, real-time collaboration, and high-quality streaming.</p>
+                    <p><strong>4. Enhanced App Security:</strong> As mobile apps handle more sensitive data, security has become a top priority. Trends include improved biometric authentication, runtime application self-protection (RASP), and enhanced data encryption.</p>
+                    <p>These trends reflect the ongoing evolution of mobile technology and user expectations. Successful mobile developers will need to stay current with these developments while maintaining focus on creating intuitive, valuable user experiences.</p>
+                `
+            }
+        ];
+
+        // Categories data
+        const categories = [
+            { name: "Web Development", count: 3 },
+            { name: "AI & Machine Learning", count: 2 },
+            { name: "Cybersecurity", count: 2 },
+            { name: "Cloud Computing", count: 1 },
+            { name: "Mobile Development", count: 1 },
+            { name: "Data Science", count: 0 },
+            { name: "Blockchain", count: 0 },
+            { name: "DevOps", count: 0 }
+        ];
+
+        // Tags data
+        const tags = [
+            "JavaScript", "React", "Python", "AI", "Security", "Cloud", "AWS", 
+            "Machine Learning", "CSS", "HTML", "API", "Node.js", "DevOps", "Docker",
+            "Web Development", "Cybersecurity", "Remote Work", "VPN", "Ethics",
+            "Quantum Computing", "Encryption", "Healthcare", "Medicine", "Mobile",
+            "Flutter", "React Native"
+        ];
+
+        // About and Contact content
+        const aboutContent = `
+            <h3>About TechInsights</h3>
+            <p>TechInsights is a premier technology blog dedicated to providing in-depth analysis, tutorials, and insights into the latest developments in the tech world. Founded in 2020, our mission is to bridge the gap between complex technological concepts and practical understanding.</p>
+            <p><strong>Our Team:</strong> We're a diverse group of technology professionals, including software engineers, cybersecurity experts, data scientists, and technology journalists. Each team member brings years of industry experience and a passion for sharing knowledge.</p>
+            <p><strong>What We Cover:</strong> From web development frameworks and cloud computing to artificial intelligence and cybersecurity, we explore the technologies that are shaping our digital future. We focus on practical applications, emerging trends, and the ethical implications of technological advancement.</p>
+            <p><strong>Our Philosophy:</strong> We believe that understanding technology is essential in today's world. Whether you're a seasoned developer, an IT professional, or simply tech-curious, we strive to make complex topics accessible and engaging.</p>
+            <p><strong>Our Main Motive:</strong> Our Main motive is to provide the high quality content to our readers and to provide the best experience to our readers</p>
+            <p><strong>Join Our Community:</strong> We encourage our readers to engage with us through comments, social media and email</p>
+            <p><strong> Contact Sabbir Hossain:</strong> If you have any questions, suggestions , please don't hesitate to reach out to us.</p>
+            <p>Have a topic suggestion or want to contribute? <a href="#" id="contactFromAbout">Get in touch with us</a>.</p>
+            <form id="contactForm">
+          
+                <div style="margin-bottom: 15px;">
+                    <input type="text" placeholder="Your Name" style="width: 100%; padding: 10px; border-radius: 4px; border: 1px solid #ddd;" required>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <input type="email" placeholder="Your Email" style="width: 100%; padding: 10px; border-radius: 4px; border: 1px solid #ddd;" required>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <textarea placeholder="Your Message" rows="5" style="width: 100%; padding: 10px; border-radius: 4px; border: 1px solid #ddd;" required></textarea>
+                </div>
+                <button type="submit" style="background-color: var(--primary-color); color: white; border: none; padding: 12px 24px; border-radius: 4px; cursor: pointer; font-weight: 600;">Send Message to us</button>
+            </form>
+
+        `;
+
+        const contactContent = `
+            <h3>Contact TechInsights</h3>
+            <p>We'd love to hear from you! Whether you have questions, suggestions, or would like to contribute to our blog, please reach out using the information below.</p>
+            <p><strong>Email:</strong> info@techinsights.com</p>
+            <p><strong>Phone:</strong> +1 (555) 123-4567</p>
+            <p><strong>Address:</strong> 123 Tech Street, San Francisco, CA 94107</p>
+            <p><strong>Social Media:</strong> Connect with us on Twitter, LinkedIn, and GitHub for the latest updates and discussions.</p>
+            <h4>Send us a Message</h4>
+            <form id="contactForm">
+          
+                <div style="margin-bottom: 15px;">
+                    <input type="text" placeholder="Your Name" style="width: 100%; padding: 10px; border-radius: 4px; border: 1px solid #ddd;" required>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <input type="email" placeholder="Your Email" style="width: 100%; padding: 10px; border-radius: 4px; border: 1px solid #ddd;" required>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <textarea placeholder="Your Message" rows="5" style="width: 100%; padding: 10px; border-radius: 4px; border: 1px solid #ddd;" required></textarea>
+                </div>
+                <button type="submit" style="background-color: var(--primary-color); color: white; border: none; padding: 12px 24px; border-radius: 4px; cursor: pointer; font-weight: 600;">Send Message</button>
+            </form>
+        `;
+
+        const privacyContent = `
+            <h3>Privacy Policy</h3>
+            <p>Last updated: June 15, 2023</p>
+            <p>TechInsights is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website.</p>
+            <p><strong>Information We Collect:</strong> We may collect personal information such as your name and email address when you subscribe to our newsletter. We also automatically collect certain information about your device and browsing behavior.</p>
+            <p><strong>How We Use Your Information:</strong> We use the information we collect to deliver and improve our content, communicate with you, and analyze how our website is used.</p>
+            <p><strong>Cookies:</strong> We use cookies and similar tracking technologies to track activity on our website and hold certain information to enhance your user experience.</p>
+            <p><strong>Your Rights:</strong> You have the right to access, correct, or delete your personal information. You may also opt-out of our newsletter at any time by clicking the unsubscribe link in our emails.</p>
+            <p>If you have any questions about this Privacy Policy, please <a href="#" id="contactFromPrivacy">contact us</a>.</p>
+        `;
+
+        const termsContent = `
+            <h3>Terms of Service</h3>
+            <p>Last updated: June 15, 2023</p>
+            <p>Welcome to TechInsights. By accessing our website, you agree to be bound by these Terms of Service.</p>
+            <p><strong>Intellectual Property:</strong> All content on this website, including articles, images, and code samples, is the property of TechInsights or its content suppliers and is protected by copyright laws.</p>
+            <p><strong>User Conduct:</strong> You agree not to use the website for any unlawful purpose or in any way that might harm, damage, or disrupt the website or its services.</p>
+            <p><strong>Disclaimer:</strong> The information on this website is provided for general informational purposes only. We make no representations or warranties of any kind about the completeness, accuracy, or reliability of this information.</p>
+            <p><strong>Limitation of Liability:</strong> TechInsights will not be liable for any damages arising from the use or inability to use our website or its content.</p>
+            <p><strong>Changes to Terms:</strong> We reserve the right to modify these terms at any time. We will notify users of any material changes by posting the new Terms of Service on this page.</p>
+            <p>If you have any questions about these Terms, please <a href="#" id="contactFromTerms">contact us</a>.</p>
+        `;
+
+        // DOM Elements
+        const postsContainer = document.getElementById('postsContainer');
+        const categoriesList = document.getElementById('categoriesList');
+        const recentPosts = document.getElementById('recentPosts');
+        const tagsContainer = document.getElementById('tagsContainer');
+        const loadMoreBtn = document.getElementById('loadMoreBtn');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        const searchBtn = document.getElementById('searchBtn');
+        const searchInput = document.getElementById('searchInput');
+        const newsletterForm = document.getElementById('newsletterForm');
+        const homeLink = document.getElementById('homeLink');
+        const filterInfo = document.getElementById('filterInfo');
+        const filterText = document.getElementById('filterText');
+        const filterValue = document.getElementById('filterValue');
+        const clearFilterBtn = document.getElementById('clearFilterBtn');
+        const sectionTitle = document.getElementById('sectionTitle');
+        const postModal = document.getElementById('postModal');
+        const modalCloseBtn = document.getElementById('modalCloseBtn');
+        const modalBody = document.getElementById('modalBody');
+        const modalTitle = document.getElementById('modalTitle');
+        const infoModal = document.getElementById('infoModal');
+        const infoModalCloseBtn = document.getElementById('infoModalCloseBtn');
+        const infoModalBody = document.getElementById('infoModalBody');
+        const infoModalTitle = document.getElementById('infoModalTitle');
+
+        // Variables
+        let visiblePosts = 4;
+        const postsPerLoad = 4;
+        let currentFilter = 'all';
+        let currentSearch = '';
+        let activeTag = '';
+
+        // Initialize the blog
+        document.addEventListener('DOMContentLoaded', function() {
+            renderPosts();
+            renderCategories();
+            renderRecentPosts();
+            renderTags();
+            setupEventListeners();
+        });
+
+        // Render blog posts based on current filter/search
+        function renderPosts() {
+            postsContainer.innerHTML = '';
+            
+            // Filter posts based on current criteria
+            let filteredPosts = blogPosts;
+            
+            if (currentFilter !== 'all' && currentFilter !== 'About' && currentFilter !== 'Contact') {
+                filteredPosts = blogPosts.filter(post => post.category === currentFilter);
+            }
+            
+            if (currentSearch) {
+                filteredPosts = filteredPosts.filter(post => 
+                    post.title.toLowerCase().includes(currentSearch) || 
+                    post.excerpt.toLowerCase().includes(currentSearch) ||
+                    post.category.toLowerCase().includes(currentSearch) ||
+                    post.tags.some(tag => tag.toLowerCase().includes(currentSearch))
+                );
+            }
+            
+            if (activeTag) {
+                filteredPosts = filteredPosts.filter(post => 
+                    post.tags.some(tag => tag.toLowerCase() === activeTag.toLowerCase())
+                );
+            }
+            
+            // Show no results message if no posts match
+            if (filteredPosts.length === 0) {
+                postsContainer.innerHTML = `
+                    <div class="no-results">
+                        <i class="fas fa-search"></i>
+                        <h3>No articles found</h3>
+                        <p>Try adjusting your search or filter to find what you're looking for.</p>
+                        <button class="clear-filter" style="margin-top: 20px;" id="clearAllFilters">Clear All Filters</button>
+                    </div>
+                `;
+                
+                // Add event listener to clear all filters button
+                document.getElementById('clearAllFilters')?.addEventListener('click', clearAllFilters);
+                
+                loadMoreBtn.style.display = 'none';
+                return;
+            }
+            
+            const postsToShow = filteredPosts.slice(0, visiblePosts);
+            
+            postsToShow.forEach(post => {
+                const postElement = document.createElement('article');
+                postElement.className = 'post-card';
+                postElement.innerHTML = `
+                    <img src="${post.image}" alt="${post.title}" class="post-image">
+                    <div class="post-content">
+                        <span class="post-category" data-category="${post.category}">${post.category}</span>
+                        <h3 class="post-title"><a href="#" class="post-title-link" data-id="${post.id}">${post.title}</a></h3>
+                        <div class="post-meta">
+                            <span><i class="far fa-calendar"></i> ${post.date}</span>
+                            <span><i class="far fa-clock"></i> ${post.readTime}</span>
+                        </div>
+                        <p class="post-excerpt">${post.excerpt}</p>
+                        <div class="post-tags">
+                            ${post.tags.map(tag => `<span class="post-tag" data-tag="${tag}">${tag}</span>`).join('')}
+                        </div>
+                        <a href="#" class="read-more post-read-more" data-id="${post.id}">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                `;
+                postsContainer.appendChild(postElement);
+            });
+            
+            // Update filter info display
+            updateFilterInfo();
+            
+            // Hide load more button if all posts are visible
+            if (visiblePosts >= filteredPosts.length) {
+                loadMoreBtn.style.display = 'none';
+            } else {
+                loadMoreBtn.style.display = 'inline-block';
+            }
+            
+            // Add event listeners to newly created elements
+            addPostEventListeners();
+        }
+
+        // Update filter information display
+        function updateFilterInfo() {
+            if (currentFilter !== 'all' || currentSearch || activeTag) {
+                filterInfo.style.display = 'flex';
+                
+                let filterTextContent = 'Showing: ';
+                let filterValueContent = '';
+                
+                if (currentFilter !== 'all') {
+                    filterValueContent += currentFilter;
+                }
+                
+                if (currentSearch) {
+                    if (filterValueContent) filterValueContent += ', ';
+                    filterValueContent += `"${currentSearch}"`;
+                }
+                
+                if (activeTag) {
+                    if (filterValueContent) filterValueContent += ', ';
+                    filterValueContent += `#${activeTag}`;
+                }
+                
+                filterValue.textContent = filterValueContent;
+                
+                // Update section title
+                if (currentSearch) {
+                    sectionTitle.textContent = `Search Results for "${currentSearch}"`;
+                } else if (activeTag) {
+                    sectionTitle.textContent = `Articles tagged with #${activeTag}`;
+                } else if (currentFilter !== 'all') {
+                    sectionTitle.textContent = `${currentFilter} Articles`;
+                } else {
+                    sectionTitle.textContent = 'Latest Articles';
+                }
+            } else {
+                filterInfo.style.display = 'none';
+                sectionTitle.textContent = 'Latest Articles';
+            }
+        }
+
+        // Render categories
+        function renderCategories() {
+            categoriesList.innerHTML = '';
+            
+            // Add "All Categories" option
+            const allCategoriesElement = document.createElement('li');
+            allCategoriesElement.innerHTML = `
+                <a href="#" data-category="all">
+                    All Categories
+                    <span>${blogPosts.length}</span>
+                </a>
+            `;
+            categoriesList.appendChild(allCategoriesElement);
+            
+            // Add individual categories
+            categories.forEach(category => {
+                const categoryElement = document.createElement('li');
+                categoryElement.innerHTML = `
+                    <a href="#" data-category="${category.name}">
+                        ${category.name}
+                        <span>${category.count}</span>
+                    </a>
+                `;
+                categoriesList.appendChild(categoryElement);
+            });
+        }
+
+        // Render recent posts
+        function renderRecentPosts() {
+            recentPosts.innerHTML = '';
+            
+            // Get the 3 most recent posts
+            const recentPostsData = blogPosts.slice(0, 3);
+            
+            recentPostsData.forEach(post => {
+                const postElement = document.createElement('li');
+                postElement.innerHTML = `
+                    <img src="${post.image}" alt="${post.title}" class="recent-post-img">
+                    <div class="recent-post-content">
+                        <h4><a href="#" class="recent-post-link" data-id="${post.id}">${post.title}</a></h4>
+                        <span><i class="far fa-calendar"></i> ${post.date}</span>
+                    </div>
+                `;
+                recentPosts.appendChild(postElement);
+            });
+        }
+
+        // Render tags
+        function renderTags() {
+            tagsContainer.innerHTML = '';
+            
+            tags.forEach(tag => {
+                const tagElement = document.createElement('a');
+                tagElement.href = '#';
+                tagElement.className = 'tag';
+                tagElement.textContent = tag;
+                tagElement.dataset.tag = tag;
+                tagsContainer.appendChild(tagElement);
+            });
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Load more button
+            loadMoreBtn.addEventListener('click', function() {
+                visiblePosts += postsPerLoad;
+                renderPosts();
+            });
+
+            // Mobile menu toggle
+            mobileMenuBtn.addEventListener('click', function() {
+                mainNav.classList.toggle('active');
+                const icon = mobileMenuBtn.querySelector('i');
+                if (mainNav.classList.contains('active')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+
+            // Search functionality
+            searchBtn.addEventListener('click', performSearch);
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+
+            // Newsletter form
+            newsletterForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const emailInput = this.querySelector('input[type="email"]');
+                if (emailInput.value) {
+                    showNotification(`Thank you for subscribing with email: ${emailInput.value}`);
+                    emailInput.value = '';
+                }
+            });
+
+            // Navigation links
+            const navLinks = document.querySelectorAll('nav a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const filter = this.dataset.filter;
+                    
+                    // Handle About and Contact separately
+                    if (filter === 'About' || filter === 'Contact') {
+                        showInfoModal(filter);
+                        return;
+                    }
+                    
+                    // Set active nav link
+                    navLinks.forEach(item => item.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Apply filter
+                    currentFilter = filter;
+                    currentSearch = '';
+                    activeTag = '';
+                    visiblePosts = 4;
+                    searchInput.value = '';
+                    
+                    // Clear active tag highlights
+                    document.querySelectorAll('.tag.active').forEach(tag => tag.classList.remove('active'));
+                    
+                    renderPosts();
+                    
+                    // Close mobile menu if open
+                    if (window.innerWidth <= 768) {
+                        mainNav.classList.remove('active');
+                        const icon = mobileMenuBtn.querySelector('i');
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                    }
+                });
+            });
+
+            // Home logo link
+            homeLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                clearAllFilters();
+                
+                // Set "All Posts" as active nav link
+                navLinks.forEach(item => item.classList.remove('active'));
+                document.querySelector('nav a[data-filter="all"]').classList.add('active');
+            });
+
+            // Clear filter button
+            clearFilterBtn.addEventListener('click', clearAllFilters);
+
+            // Modal close buttons
+            modalCloseBtn.addEventListener('click', function() {
+                postModal.style.display = 'none';
+            });
+
+            infoModalCloseBtn.addEventListener('click', function() {
+                infoModal.style.display = 'none';
+            });
+
+            // Close modal when clicking outside
+            window.addEventListener('click', function(e) {
+                if (e.target === postModal) {
+                    postModal.style.display = 'none';
+                }
+                if (e.target === infoModal) {
+                    infoModal.style.display = 'none';
+                }
+            });
+
+            // Footer links
+            document.querySelectorAll('.footer-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const filter = this.dataset.filter;
+                    
+                    if (this.id === 'privacyLink') {
+                        showInfoModal('Privacy');
+                        return;
+                    }
+                    
+                    if (this.id === 'termsLink') {
+                        showInfoModal('Terms');
+                        return;
+                    }
+                    
+                    if (filter === 'About' || filter === 'Contact') {
+                        showInfoModal(filter);
+                        return;
+                    }
+                    
+                    // Apply filter from footer
+                    currentFilter = filter;
+                    currentSearch = '';
+                    activeTag = '';
+                    visiblePosts = 4;
+                    searchInput.value = '';
+                    
+                    // Set active nav link
+                    navLinks.forEach(item => item.classList.remove('active'));
+                    document.querySelector(`nav a[data-filter="${filter}"]`).classList.add('active');
+                    
+                    renderPosts();
+                    
+                    // Scroll to top
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            });
+
+            // Social links
+            document.querySelectorAll('.social-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const platform = this.querySelector('i').className.split(' ')[1].replace('fa-', '');
+                    showNotification(`Opening ${platform} in a new window (simulated)`);
+                });
+            });
+
+            // Add initial post event listeners
+            addPostEventListeners();
+            
+            // Add category event listeners
+            addCategoryEventListeners();
+            
+            // Add tag event listeners
+            addTagEventListeners();
+        }
+
+        // Add event listeners to post elements
+        function addPostEventListeners() {
+            // Post title links
+            document.querySelectorAll('.post-title-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const postId = parseInt(this.dataset.id);
+                    showPostModal(postId);
+                });
+            });
+
+            // Read more links
+            document.querySelectorAll('.post-read-more').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const postId = parseInt(this.dataset.id);
+                    showPostModal(postId);
+                });
+            });
+
+            // Category links in posts
+            document.querySelectorAll('.post-category').forEach(category => {
+                category.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const categoryName = this.dataset.category;
+                    
+                    // Set active nav link
+                    document.querySelectorAll('nav a').forEach(item => item.classList.remove('active'));
+                    const navLink = document.querySelector(`nav a[data-filter="${categoryName}"]`);
+                    if (navLink) {
+                        navLink.classList.add('active');
+                    }
+                    
+                    // Apply category filter
+                    currentFilter = categoryName;
+                    currentSearch = '';
+                    activeTag = '';
+                    visiblePosts = 4;
+                    searchInput.value = '';
+                    
+                    // Clear active tag highlights
+                    document.querySelectorAll('.tag.active').forEach(tag => tag.classList.remove('active'));
+                    
+                    renderPosts();
+                    
+                    // Scroll to top
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            });
+
+            // Tag links in posts
+            document.querySelectorAll('.post-tag').forEach(tag => {
+                tag.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const tagName = this.dataset.tag;
+                    
+                    // Apply tag filter
+                    activeTag = tagName;
+                    currentFilter = 'all';
+                    currentSearch = '';
+                    visiblePosts = 4;
+                    searchInput.value = '';
+                    
+                    // Set active nav link
+                    document.querySelectorAll('nav a').forEach(item => item.classList.remove('active'));
+                    document.querySelector('nav a[data-filter="all"]').classList.add('active');
+                    
+                    // Highlight active tag
+                    document.querySelectorAll('.tag.active').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll(`.tag[data-tag="${tagName}"]`).forEach(t => t.classList.add('active'));
+                    
+                    renderPosts();
+                    
+                    // Scroll to top
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            });
+
+            // Recent post links
+            document.querySelectorAll('.recent-post-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const postId = parseInt(this.dataset.id);
+                    showPostModal(postId);
+                });
+            });
+        }
+
+        // Add event listeners to category links
+        function addCategoryEventListeners() {
+            document.querySelectorAll('.categories-list a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const category = this.dataset.category;
+                    
+                    if (category === 'all') {
+                        clearAllFilters();
+                        return;
+                    }
+                    
+                    // Set active nav link
+                    document.querySelectorAll('nav a').forEach(item => item.classList.remove('active'));
+                    const navLink = document.querySelector(`nav a[data-filter="${category}"]`);
+                    if (navLink) {
+                        navLink.classList.add('active');
+                    } else {
+                        // If no direct nav link, set "All Posts" as active
+                        document.querySelector('nav a[data-filter="all"]').classList.add('active');
+                    }
+                    
+                    // Apply category filter
+                    currentFilter = category;
+                    currentSearch = '';
+                    activeTag = '';
+                    visiblePosts = 4;
+                    searchInput.value = '';
+                    
+                    // Clear active tag highlights
+                    document.querySelectorAll('.tag.active').forEach(tag => tag.classList.remove('active'));
+                    
+                    renderPosts();
+                    
+                    // Scroll to top
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            });
+        }
+
+        // Add event listeners to tag links
+        function addTagEventListeners() {
+            document.querySelectorAll('.tag').forEach(tag => {
+                tag.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const tagName = this.dataset.tag;
+                    
+                    // Apply tag filter
+                    activeTag = tagName;
+                    currentFilter = 'all';
+                    currentSearch = '';
+                    visiblePosts = 4;
+                    searchInput.value = '';
+                    
+                    // Set active nav link
+                    document.querySelectorAll('nav a').forEach(item => item.classList.remove('active'));
+                    document.querySelector('nav a[data-filter="all"]').classList.add('active');
+                    
+                    // Highlight active tag
+                    document.querySelectorAll('.tag.active').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    renderPosts();
+                    
+                    // Scroll to top
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            });
+        }
+
+        // Search functionality
+        function performSearch() {
+            const searchTerm = searchInput.value.trim().toLowerCase();
+            
+            if (searchTerm === '') {
+                showNotification('Please enter a search term');
+                return;
+            }
+            
+            currentSearch = searchTerm;
+            currentFilter = 'all';
+            activeTag = '';
+            visiblePosts = 4;
+            
+            // Set "All Posts" as active nav link
+            document.querySelectorAll('nav a').forEach(item => item.classList.remove('active'));
+            document.querySelector('nav a[data-filter="all"]').classList.add('active');
+            
+            // Clear active tag highlights
+            document.querySelectorAll('.tag.active').forEach(tag => tag.classList.remove('active'));
+            
+            renderPosts();
+        }
+
+        // Clear all filters
+        function clearAllFilters() {
+            currentFilter = 'all';
+            currentSearch = '';
+            activeTag = '';
+            visiblePosts = 4;
+            searchInput.value = '';
+            
+            // Set "All Posts" as active nav link
+            document.querySelectorAll('nav a').forEach(item => item.classList.remove('active'));
+            document.querySelector('nav a[data-filter="all"]').classList.add('active');
+            
+            // Clear active tag highlights
+            document.querySelectorAll('.tag.active').forEach(tag => tag.classList.remove('active'));
+            
+            renderPosts();
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Show post modal with full content
+        function showPostModal(postId) {
+            const post = blogPosts.find(p => p.id === postId);
+            
+            if (!post) return;
+            
+            modalTitle.textContent = post.title;
+            modalBody.innerHTML = post.content;
+            
+            // Add event listeners to links in modal content
+            setTimeout(() => {
+                // Category link in modal
+                const categoryLink = modalBody.querySelector('.post-meta .fa-folder').closest('span');
+                if (categoryLink) {
+                    categoryLink.style.cursor = 'pointer';
+                    categoryLink.addEventListener('click', function() {
+                        postModal.style.display = 'none';
+                        
+                        // Apply category filter
+                        currentFilter = post.category;
+                        currentSearch = '';
+                        activeTag = '';
+                        visiblePosts = 4;
+                        searchInput.value = '';
+                        
+                        // Set active nav link
+                        document.querySelectorAll('nav a').forEach(item => item.classList.remove('active'));
+                        const navLink = document.querySelector(`nav a[data-filter="${post.category}"]`);
+                        if (navLink) {
+                            navLink.classList.add('active');
+                        }
+                        
+                        renderPosts();
+                        
+                        // Scroll to top
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    });
+                }
+            }, 100);
+            
+            postModal.style.display = 'flex';
+        }
+
+        // Show info modal (About, Contact, Privacy, Terms)
+        function showInfoModal(type) {
+            infoModalTitle.textContent = type;
+            
+            switch(type) {
+                case 'About':
+                    infoModalBody.innerHTML = aboutContent;
+                    break;
+                case 'Contact':
+                    infoModalBody.innerHTML = contactContent;
+                    break;
+                case 'Privacy':
+                    infoModalBody.innerHTML = privacyContent;
+                    break;
+                case 'Terms':
+                    infoModalBody.innerHTML = termsContent;
+                    break;
+            }
+            
+            // Add event listeners to links in modal content
+            setTimeout(() => {
+                // Contact links in other modals
+                const contactLinks = infoModalBody.querySelectorAll('#contactFromAbout, #contactFromPrivacy, #contactFromTerms');
+                contactLinks.forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        infoModal.style.display = 'none';
+                        setTimeout(() => showInfoModal('Contact'), 100);
+                    });
+                });
+                
+                // Contact form submission
+                const contactForm = infoModalBody.querySelector('#contactForm');
+                if (contactForm) {
+                    contactForm.addEventListener('submit', function(e) {
+                        e.preventDefault();
+                        showNotification('Thank you for your message! We\'ll get back to you soon.');
+                        infoModal.style.display = 'none';
+                    });
+                }
+            }, 100);
+            
+            infoModal.style.display = 'flex';
+        }
+
+        // Show notification
+        function showNotification(message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background-color: var(--primary-color);
+                color: white;
+                padding: 15px 20px;
+                border-radius: var(--border-radius);
+                box-shadow: var(--shadow);
+                z-index: 10000;
+                animation: slideIn 0.3s ease-out;
+            `;
+            
+            // Add keyframes for animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideIn {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            // Remove notification after 3 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-in';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                    document.head.removeChild(style);
+                }, 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
